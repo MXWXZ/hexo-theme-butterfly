@@ -17,6 +17,12 @@ if theme.aside.card_webinfo.enable
         .webinfo-item
           .item-name=_p('aside.card_webinfo.site_wordcount') + " :"
           .item-count=totalcount(site)
+      if theme.waline.pageview
+        .webinfo-item
+          .item-name= _p('aside.card_webinfo.site_pv_name') + " :"
+          .item-count
+            span.waline-pageview-count(data-path=url_for('/'))
+              i.fa-solid.fa-spinner.fa-spin
       if theme.busuanzi.site_uv
         .webinfo-item
           .item-name= _p('aside.card_webinfo.site_uv_name') + " :"

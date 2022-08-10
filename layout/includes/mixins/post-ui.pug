@@ -8,8 +8,8 @@ mixin postUI(posts)
         let leftOrRight = position === 'both'
           ? index%2 == 0 ? 'left' : 'right'
           : position === 'left' ? 'left' : 'right'
-        let post_cover = article.cover
-        let no_cover = article.cover === false || !theme.cover.index_enable ? 'no-cover' : ''
+        let post_cover = article.randomcover ? false : article.cover
+        let no_cover = article.cover === false || !theme.cover.index_enable || article.randomcover ? 'no-cover' : ''
       -
       if post_cover && theme.cover.index_enable
         .post_cover(class=leftOrRight)
@@ -58,6 +58,15 @@ mixin postUI(posts)
                 if (index < article.tags.data.length - 1)
                   span.article-meta-link #[='•']
           
+          span.article-meta
+            span.article-meta-separator |
+            i.fas.fa-eye
+            span.article-meta-label=_p('post.page_pv') + ':'
+            if block
+              block
+            span.waline-pageview-count(data-path=url_for(link))
+              i.fa-solid.fa-spinner.fa-spin
+
           mixin countBlockInIndex
             - needLoadCountJs = true
             span.article-meta

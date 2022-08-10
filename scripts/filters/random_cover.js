@@ -20,7 +20,10 @@ hexo.extend.filter.register('before_post_render', function (data) {
     return data
   }
 
-  data.cover = data.cover || randomCover()
+  if (data.cover)
+    data.cover = data.cover;
+  else
+    data.cover = data.randomcover = randomCover();
   return data
 })
 

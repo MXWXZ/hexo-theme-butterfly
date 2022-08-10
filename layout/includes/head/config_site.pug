@@ -1,6 +1,10 @@
 -
   const titleVal = pageTitle.replace(/'/ig,"\\'")
 
+  var showOutdated = false
+  if (page.outdated === true)
+    showOutdated = true
+
   let isHighlightShrink
   if (theme.highlight_shrink == 'none') isHighlightShrink = 'undefined'
   else if (page.highlight_shrink === true || page.highlight_shrink === false) isHighlightShrink = page.highlight_shrink
@@ -26,5 +30,6 @@ script#config-diff.
     isHome: !{is_home()},
     isHighlightShrink: !{isHighlightShrink},
     isToc: !{showToc},
-    postUpdate: '!{full_date(page.updated)}'
+    postUpdate: '!{full_date(page.updated)}',
+    isOutdated: !{showOutdated},
   }

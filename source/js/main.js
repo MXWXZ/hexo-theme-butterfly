@@ -699,7 +699,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const addPostOutdateNotice = function () {
     const data = GLOBAL_CONFIG.noticeOutdate
     const diffDay = btf.diffDate(GLOBAL_CONFIG_SITE.postUpdate)
-    if (diffDay >= data.limitDay) {
+    if (GLOBAL_CONFIG_SITE.isOutdated && diffDay >= data.limitDay) {
       const ele = document.createElement('div')
       ele.className = 'post-outdate-notice'
       ele.textContent = data.messagePrev + ' ' + diffDay + ' ' + data.messageNext
