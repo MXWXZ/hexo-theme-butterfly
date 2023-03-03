@@ -34,6 +34,7 @@ hexo.extend.filter.register("before_post_render", function (data) {
   if (!coverVal) {
     randomCover = randomCoverFn();
     data.cover = randomCover;
+    data.randomized = true;
     coverVal = randomCover; // update coverVal
   }
 
@@ -44,7 +45,5 @@ hexo.extend.filter.register("before_post_render", function (data) {
     }
   }
 
-  if (data.cover) data.cover = data.cover;
-  else data.cover = data.randomcover = randomCover();
   return data;
 });
