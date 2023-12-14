@@ -26,5 +26,5 @@ block content
                 update: false,
             });
         }
-        if (typeof Waline === 'function') initWaline() 
+        if (typeof Waline === 'object') initWaline() 
         else getScript('/custom/waline_pv.js').then(initWaline)
