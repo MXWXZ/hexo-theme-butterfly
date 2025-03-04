@@ -1,22 +1,12 @@
 extends includes/layout.pug
 
 block content
-  #page
-    if top_img === false
-      h1.page-title= page.title
+  - const noCardLayout = ['shuoshuo', '404'].includes(page.type) ? 'nc' : ''
+  - var commentsJsLoad = false
 
-    case page.type
-      when 'tags'
-        include includes/page/tags.pug
-      when 'link'
-        include includes/page/flink.pug
-      when 'categories'
-        include includes/page/categories.pug
-      default
-        include includes/page/default-page.pug
-
-    if page.comments !== false && theme.comments && theme.comments.use
-      - var commentsJsLoad = true
+  mixin commentLoad
+    if page.comments !== false && theme.comments.use
+      - commentsJsLoad = true
       !=partial('includes/third-party/comments/index', {}, {cache: true})
     else
       script.
@@ -28,3 +18,25 @@ block content
         }
         if (typeof Waline === 'object') initWaline() 
         else getScript('/custom/waline_pv.js').then(initWaline)
+
+  #page(class=noCardLayout)
+    if top_img === false && page.title
+      .page-title= page.title
+
+    case page.type
+      when 'tags'
+        include includes/page/tags.pug
+        +commentLoad
+      when 'link'
+        include includes/page/flink.pug
+        +commentLoad
+      when 'categories'
+        include includes/page/categories.pug
+        +commentLoad
+      when '404'
+        include includes/page/404.pug
+      when 'shuoshuo'
+        include includes/page/shuoshuo.pug
+      default
+        include includes/page/default-page.pug
+        +commentLoad
