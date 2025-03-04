@@ -7,11 +7,11 @@ block content
     +articleSort(page.posts)
     include includes/pagination.pug
   script.
-    function initWaline () {
-        Waline.pageviewCount({
-            serverURL: '!{theme.waline.serverURL}',
-            update: false,
-        });
+    function initWaline (pageviewCount) {
+      pageviewCount({
+        serverURL: '!{theme.waline.serverURL}',
+        update: false,
+      });
     }
-    if (typeof Waline === 'object') initWaline() 
-    else getScript('/custom/waline_pv.js').then(initWaline)
+    if (typeof Waline === 'object') initWaline(Waline.pageviewCount)
+    else import('/custom/waline_pv.js').then(({ pageviewCount }) => initWaline(pageviewCount))

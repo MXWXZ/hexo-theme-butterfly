@@ -8,8 +8,8 @@ mixin indexPostUI()
           - const link = article.link || article.path
           - const title = article.title || _p('no_title')
           - const leftOrRight = indexLayout === 3 ? (index % 2 === 0 ? 'left' : 'right') : (indexLayout === 2 ? 'right' : '')
-          - const post_cover = article.cover
-          - const no_cover = article.cover === false || !theme.cover.index_enable ? 'no-cover' : ''
+          - const post_cover = article.randomized ? false : article.cover
+          - const no_cover = article.cover === false || !theme.cover.index_enable || article.randomized  ? 'no-cover' : ''
 
           if post_cover && theme.cover.index_enable
             .post_cover(class=leftOrRight)
@@ -58,6 +58,15 @@ mixin indexPostUI()
                     a(href=url_for(item.path)).article-meta__tags #[=item.name]
                     if index < article.tags.data.length - 1
                       span.article-meta-link #[='•']
+
+              span.article-meta
+                span.article-meta-separator |
+                i.fas.fa-eye
+                span.article-meta-label=_p('post.page_pv') + ':'
+                if block
+                  block
+                span.waline-pageview-count(data-path=url_for(link))
+                  i.fa-solid.fa-spinner.fa-spin
 
               mixin countBlockInIndex
                 - needLoadCountJs = true

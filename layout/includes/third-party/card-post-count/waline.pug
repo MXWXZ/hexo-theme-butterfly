@@ -3,13 +3,14 @@ script.
   (() => {
     async function loadWaline () {
       try {
-        function initWaline () {
-          Waline.pageviewCount({
+        function initWaline (pageviewCount) {
+          pageviewCount({
             serverURL: '!{theme.waline.serverURL}',
-          })
+            update: false,
+          });
         }
-        if (typeof Waline === 'object') initWaline() 
-        else getScript('/custom/waline_pv.js').then(initWaline)
+        if (typeof Waline === 'object') initWaline(Waline.pageviewCount)
+        else import('/custom/waline_pv.js').then(({ pageviewCount }) => initWaline(pageviewCount))
 
         const eleGroup = document.querySelectorAll('#recent-posts .waline-comment-count')
         const keyArray = Array.from(eleGroup).map(i => i.getAttribute('data-path'))
